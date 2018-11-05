@@ -1,16 +1,20 @@
 class Sensob:
     def __init__(self):
         self.value = None
+        self.setup()
 
-    def update(self):
+    def setup(self):
         pass
 
     def get_value(self):
-        pass
+        return self.value
+
+    def update(self):
+        self.value = self.sensor_get_value()
+        return self.value
 
     def reset(self):
         self.value = None
 
-class IR(Sensob):
-    def __int__(self):
-        super(IR, self).__int__()
+    def sensor_get_value(self):
+        return None

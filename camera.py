@@ -3,9 +3,11 @@ import time
 from PIL import Image
 from picamera import PiCamera
 
+from sensob import *
 
-class Camera:
+class Camera(Sensob):
     def __init__(self, img_width=128, img_height=96, img_rot=0, img_iso=1200):
+        super(Camera, self).__init__()
         self.value = None
         self.img_width = img_width
         self.img_height = img_height
@@ -20,16 +22,6 @@ class Camera:
         self.camera.resolution = (self.img_width, self.img_height)
         time.sleep(2)  # Camera warm-up time
         self.camera.start_preview()
-
-    def get_value(self):
-        return self.value
-
-    def update(self):
-        self.sensor_get_value()
-        return self.value
-
-    def reset(self):
-        self.value = None
 
     def sensor_get_value(self):
         stream = io.BytesIO()
