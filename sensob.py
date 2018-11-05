@@ -3,10 +3,14 @@ class Sensob:
         self.value = None
 
     def update(self):
-        # TODO: Implement
+        pass
 
     def get_value(self):
-        # TODO: Implement
+        pass
 
     def reset(self):
         self.value = None
+
+class IR(Sensob):
+    def __int__(self):
+        super(IR, self).__int__()
