@@ -17,4 +17,4 @@ class Sensob:
         self.value = None
 
     def sensor_get_value(self):
-        return None
+        pass
