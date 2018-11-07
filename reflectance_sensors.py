@@ -93,10 +93,6 @@ class ReflectanceSensors(Sensob):
     # the amount of reflectance picked up by each one.  A high reflectance (near 1) indicates a LIGHT surface, while
     # a value near 0 indicates a DARK surface.
 
-    def update(self):
-        self.sensor_get_value()
-        return self.value
-
     def sensor_get_value(self):
         self.recharge_capacitors()
         for pin in self.sensor_inputs:

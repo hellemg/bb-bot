@@ -11,7 +11,7 @@ class BBCon:
         self.motobs = [Motobs()]
         self.behaviours = [ObstacleAvoidance(self.sensobs)]
         self.arbitrator = Arbitrator()
-        self.timestep = 0.5
+        self.timestep = 1
         self.debug = debug
 
     def add_behaviour(self, behaviour):
@@ -30,7 +30,7 @@ class BBCon:
             raise ValueError("Not active behaviour: %r" % behaviour)
         self.active_behaviours.remove(behaviour)
 
-    def wait(self, seconds=0.5):
+    def wait(self, seconds):
         time.sleep(seconds)
 
     def decide_active_behaviours(self):
@@ -51,7 +51,7 @@ class BBCon:
         self.decide_active_behaviours()
         motor_rec, halt_flag = self.arbitrator.choose_action()
         self.motobs[0].send_request_to_motors(motor_rec, self.timestep)
-        #self.wait()
+        self.wait(self.timestep)
         for s in self.sensobs:
             s.reset()
         if halt_flag:
