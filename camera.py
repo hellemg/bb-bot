@@ -13,9 +13,10 @@ class Camera(Sensob):
         self.img_height = img_height
         self.img_rot = img_rot
         self.img_iso = img_iso
-        self.init_camera()
+        self.setup()
+        self.name = "Camera"
 
-    def init_camera(self):
+    def setup(self):
         self.camera = PiCamera()
         self.camera.iso = self.img_iso
         self.camera.rotation = self.img_rot

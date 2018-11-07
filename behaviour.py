@@ -1,6 +1,7 @@
 class Behaviour:
-    def __init__(self, bbcon):
-        self.bbcon = bbcon
+    def __init__(self):
+        #self.bbcon = bbcon
+        self.name = self.__class__.__name__
         self.sensobs = None
         self.motor_rec = None
         self.active_flag = True
@@ -16,6 +17,8 @@ class Behaviour:
         pass
 
     def update(self):
+        if self.debug:
+            print("Updating behaviour: ", self.name)
         if self.active_flag:
             self.active_flag = not self.consider_deactivation()
         else:
