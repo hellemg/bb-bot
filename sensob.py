@@ -15,7 +15,7 @@ class Sensob:
         self.value = self.sensor_get_value()
         if self.debug:
             print("Updating sensob: ", self.name)
-            print("- object detected at:", self.value)
+            print("- sensor value:", self.value)
         # return self.value
 
     def reset(self):
@@ -34,6 +34,11 @@ class FakeUltrasonic(Sensob):
 
 
 class FakeReflectance(Sensob):
+    def __init__(self):
+        super(FakeReflectance, self).__init__()
+        self.min_val = 0.2
+        self.max_val = 0.8
+
     def sensor_get_value(self):
         # Where the black part is
         # Low value means dark

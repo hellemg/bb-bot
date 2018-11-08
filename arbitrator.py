@@ -13,11 +13,11 @@ class Arbitrator:
                 chosen_behaviour = ab
         if self.debug:
             print("Chosen behaviour:", chosen_behaviour.name)
-            print("- motor_rec:", chosen_behaviour.motor_recommendation)
+            print("- motor_rec:", chosen_behaviour.motor_rec)
             print("- weigth:", chosen_behaviour.weight)
             print("- halt request:", chosen_behaviour.halt_request)
         # choose_behaviour.halt: boolean, whether or not to stop the run
-        return (chosen_behaviour.motor_recommendation, chosen_behaviour.halt_request)
+        return (chosen_behaviour.motor_rec, chosen_behaviour.halt_request)
 
     def add_active_behaviour(self, behaviour):
         self.active_behaviours.append(behaviour)

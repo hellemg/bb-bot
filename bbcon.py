@@ -1,15 +1,16 @@
 import time
 from obstacleavoidance import *
+from linefollowing import *
 from arbitrator import *
 from motobs import *
 from sensob import *
 
 class BBCon:
     def __init__(self, debug = True):
-        self.sensobs = [FakeUltrasonic()]
+        self.sensobs = [FakeUltrasonic(), FakeReflectance()]
         self.active_behaviours = []
         self.motobs = [Motobs()]
-        self.behaviours = [ObstacleAvoidance(self.sensobs)]
+        self.behaviours = [ObstacleAvoidance(self.sensobs), LineFollowing(self.sensobs)]
         self.arbitrator = Arbitrator()
         self.timestep = 1
         self.debug = debug
@@ -44,11 +45,17 @@ class BBCon:
             self.arbitrator.add_active_behaviour(ab)
 
     def run_one_timestep(self):
+        if self.debug:
+            print("--------------new timestep---------------")
         for s in self.sensobs:
             s.update()
         for b in self.behaviours:
             b.update()
         self.decide_active_behaviours()
+        if self.debug:
+            print("Active behaviours")
+            for ab in self.active_behaviours:
+                print("-",ab.name)
         motor_rec, halt_flag = self.arbitrator.choose_action()
         self.motobs[0].send_request_to_motors(motor_rec, self.timestep)
         self.wait(self.timestep)

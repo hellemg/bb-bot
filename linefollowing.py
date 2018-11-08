@@ -24,7 +24,7 @@ class LineFollowing(Behaviour):
         Deactivate if:
         - Everything is dark (reached a blob)
         """
-        return self.motor_recommendation == 'stop'
+        return self.motor_rec == 'stop'
 
     def get_bottom(self):
         self.sensor_values = self.reflectance.get_value()
@@ -71,36 +71,36 @@ class LineFollowing(Behaviour):
         if self.is_white(0):
             if change_index != 10:
                 # Black stripe in the middle
-                if self.debug:
-                    print("- black in the middle, white on edges")
-                if self.is_white(6):
-                    self.motor_recommendation = 'forward'
+                if self.is_white(5):
+                    if self.debug:
+                        print("- black in the middle, white on edges")
+                    self.motor_rec = 'forward'
                     self.match_degree = 0.8
                 # Black to the right, follow it
-                if self.debug:
-                    print("- black to the right, white to the left")
                 else:
-                    self.motor_recommendation = 'right'
+                    if self.debug:
+                        print("- black to the right, white to the left")
+                    self.motor_rec = 'right'
                     self.match_degree = (change_index - 1) * 2 / 10
             else:
                 # Everything is white
                 if self.debug:
                     print("- everything is white")
-                self.motor_recommendation = 'forward'
+                self.motor_rec = 'forward'
                 self.match_degree = 0.8
         elif self.is_black(0):
             if change_index != 10:
                 # Black to the left, follow it
                 if self.debug:
                     print("- black to the left, white to the right")
-                self.motor_recommendation = 'left'
+                self.motor_rec = 'left'
                 self.match_degree = 1 - (change_index - 1) * 2 / 10
             else:
                 # Everything is black, woho!
                 if self.debug:
                     print("- everything is black")
-                self.motor_recommendation = 'stop'
+                self.motor_rec = 'stop'
                 self.match_degree = 0.8
         if self.debug:
-            print("- recommended to drive", self.motor_recommendation)
+            print("- recommended to drive", self.motor_rec)
             print("- will I deactivate? ", self.consider_deactivation())
