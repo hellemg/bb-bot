@@ -3,15 +3,16 @@ from behaviour import *
 class LineFollowing(Behaviour):
     def __init__(self):
         super(LineFollowing, self).__init__()
+        self.have_been_active = False
         #Range: [0,1]. Low values means dark
         #self.value = [-1, -1, -1, -1, -1, -1]
 
     def consider_activation(self):
-        # TODO: Implement
         """
         Activate if:
         - You haven't been activated earlier
         """
+        return not self.have_been_active
 
     def consider_deactivation(self):
         # TODO: Implement
@@ -19,6 +20,7 @@ class LineFollowing(Behaviour):
         Deactivate if:
         - Everything is dark (reached a blob)
         """
+
     def sense_and_act(self):
         # TODO: Implement
         """
