@@ -1,8 +1,9 @@
 from behaviour import *
 
+
 class ObstacleAvoidance(Behaviour):
     def __init__(self, sensobs, threshold=2.5):
-        super(ObstacleAvoidance, self).__init__(sensobs, active_flag = True, priority = 1)
+        super(ObstacleAvoidance, self).__init__(sensobs, active_flag=True, priority=0.95)
         self.ultrasonic = sensobs[0]
         self.front = False
         self.threshold = threshold
@@ -16,12 +17,15 @@ class ObstacleAvoidance(Behaviour):
             if self.debug:
                 print("- object in front")
             self.match_degree = 1
-            self.motor_recommendation = "right"
+            self.motor_rec = "right"
         else:
             if self.debug:
                 print("- no object in front")
             self.match_degree = 0
-            self.motor_recommendation = "stop"
+            self.motor_rec = "stop"
+        if self.debug:
+            print("- recommended to drive", self.motor_rec)
+            print("- will I deactivate? ", self.consider_deactivation())
 
     def consider_activation(self):
         return True

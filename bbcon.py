@@ -39,7 +39,7 @@ class BBCon:
             if ab.consider_deactivation():
                 self.deactivate_behaviour(ab)
         for b in self.behaviours:
-            if b.consider_activation():
+            if b.consider_activation() and b not in self.active_behaviours:
                 self.activate_behaviour(b)
         for ab in self.active_behaviours:
             self.arbitrator.add_active_behaviour(ab)

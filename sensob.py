@@ -42,6 +42,6 @@ class FakeReflectance(Sensob):
     def sensor_get_value(self):
         # Where the black part is
         # Low value means dark
-        choice = input(print("Choose where the dark is - right/left/middle/black (r/l/m/b): "))
-        return {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0]}[
-            choice]
+        choice = input(print("Choose where the dark is - right/left/middle/black/white (r/l/m/b/w): "))
+        return {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
+                'w': [1, 1, 1, 1, 1, 1]}[choice]

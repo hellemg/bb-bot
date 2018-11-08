@@ -100,7 +100,8 @@ class LineFollowing(Behaviour):
                 if self.debug:
                     print("- everything is black")
                 self.motor_rec = 'stop'
-                self.match_degree = 0.8
+                self.match_degree = 1
+                self.priority = 1
         if self.debug:
             print("- recommended to drive", self.motor_rec)
             print("- will I deactivate? ", self.consider_deactivation())
