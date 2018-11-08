@@ -36,11 +36,12 @@ class BBCon:
 
     def decide_active_behaviours(self):
         for ab in self.active_behaviours:
-            if ab.consider_deactivation():
+            if not ab.active_flag:
                 self.deactivate_behaviour(ab)
         for b in self.behaviours:
-            if b.consider_activation() and b not in self.active_behaviours:
+            if b.active_flag and b not in self.active_behaviours:
                 self.activate_behaviour(b)
+        self.arbitrator.reset_active_behaviours()
         for ab in self.active_behaviours:
             self.arbitrator.add_active_behaviour(ab)
 

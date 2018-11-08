@@ -4,7 +4,7 @@ from behaviour import *
 class LineFollowing(Behaviour):
     def __init__(self, sensobs):
         super(LineFollowing, self).__init__(sensobs, active_flag=True, priority=0.6)
-        self.have_been_active = False
+        self.have_been_active = True
         self.reflectance = self.sensobs[1]
         # Sensorvalue range: [0,1]. 0 means dark
         self.min_sensor_value = self.reflectance.min_val
@@ -17,7 +17,11 @@ class LineFollowing(Behaviour):
         Activate if:
         - You haven't been activated earlier
         """
-        return not self.have_been_active
+        returnstuff = not self.have_been_active
+        # self.have_been_active = True
+        if self.debug:
+            print("LF consider activation. returnstuff and have been active:", returnstuff, self.have_been_active)
+        return returnstuff
 
     def consider_deactivation(self):
         """
@@ -102,6 +106,3 @@ class LineFollowing(Behaviour):
                 self.motor_rec = 'stop'
                 self.match_degree = 1
                 self.priority = 1
-        if self.debug:
-            print("- recommended to drive", self.motor_rec)
-            print("- will I deactivate? ", self.consider_deactivation())

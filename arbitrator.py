@@ -21,3 +21,6 @@ class Arbitrator:
 
     def add_active_behaviour(self, behaviour):
         self.active_behaviours.append(behaviour)
+
+    def reset_active_behaviours(self):
+        self.active_behaviours = []

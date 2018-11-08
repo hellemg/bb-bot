@@ -23,12 +23,9 @@ class ObstacleAvoidance(Behaviour):
                 print("- no object in front")
             self.match_degree = 0
             self.motor_rec = "stop"
-        if self.debug:
-            print("- recommended to drive", self.motor_rec)
-            print("- will I deactivate? ", self.consider_deactivation())
 
     def consider_activation(self):
-        return True
+        self.active_flag = True
 
     def consider_deactivation(self):
-        return False
+        self.active_flag = True
