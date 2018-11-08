@@ -1,20 +1,11 @@
 from behaviour import *
 
 class ObstacleAvoidance(Behaviour):
-    def __init__(self, sensobs, priority=1, threshold=2.5, debug = True):
-        super(ObstacleAvoidance, self).__init__()
-        self.sensobs = sensobs
-        self.priority = priority
-        self.active_flag = True
-        self.halt_request = False
-        self.match_degree = 0
-        self.weight = self.match_degree * self.priority
-
+    def __init__(self, sensobs, threshold=2.5):
+        super(ObstacleAvoidance, self).__init__(sensobs, active_flag = True, priority = 1)
         self.ultrasonic = sensobs[0]
         self.front = False
         self.threshold = threshold
-        self.motor_recommendation = "stop"
-        self.debug = debug
 
     def get_front(self):
         self.front = self.ultrasonic.get_value() < self.threshold

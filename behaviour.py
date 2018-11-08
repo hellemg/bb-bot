@@ -1,14 +1,15 @@
 class Behaviour:
-    def __init__(self):
+    def __init__(self, sensobs, active_flag, priority, debug = True):
         #self.bbcon = bbcon
         self.name = self.__class__.__name__
-        self.sensobs = None
-        self.motor_rec = None
-        self.active_flag = True
-        self.halt_request = None
-        self.priority = None
-        self.match_degree = None
-        self.weight = None
+        self.sensobs = sensobs
+        self.active_flag = active_flag
+        self.priority = priority
+        self.halt_request = False
+        self.match_degree = 0
+        self.weight = self.priority * self.match_degree
+        self.motor_rec = 'forward'
+        self.debug = debug
 
     def consider_deactivation(self):
         pass

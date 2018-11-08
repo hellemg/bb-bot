@@ -25,6 +25,10 @@ class Motobs():
         if self.debug:
             print("Stopping")
 
+    def dance(self):
+        if self.debug:
+            print("Victory dance!")
+
     def send_request_to_motors(self, motor_rec, dur):
         if motor_rec == "forward":
             self.forward(dur=dur)
@@ -36,3 +40,5 @@ class Motobs():
             self.right(dur=dur)
         elif motor_rec == "stop":
             self.stop()
+        elif motor_rec == "dance":
+            self.dance()
