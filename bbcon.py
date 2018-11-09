@@ -5,8 +5,9 @@ from arbitrator import *
 from motobs import *
 from sensob import *
 
+
 class BBCon:
-    def __init__(self, debug = True):
+    def __init__(self, debug=True):
         self.sensobs = [FakeUltrasonic(), FakeReflectance()]
         self.active_behaviours = []
         self.motobs = [Motobs()]
@@ -56,12 +57,11 @@ class BBCon:
         if self.debug:
             print("Active behaviours")
             for ab in self.active_behaviours:
-                print("-",ab.name)
+                print("-", ab.name)
         motor_rec, halt_flag = self.arbitrator.choose_action()
+        if halt_flag:
+            quit()
         self.motobs[0].send_request_to_motors(motor_rec, self.timestep)
         self.wait(self.timestep)
         for s in self.sensobs:
             s.reset()
-        if halt_flag:
-            quit()
-

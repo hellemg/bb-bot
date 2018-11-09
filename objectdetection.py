@@ -1,105 +1,68 @@
 from behaviour import *
 
+
 class ObjectDetection(Behaviour):
-    def __int__(self, bbcon, sensobs, target_color = "red", priority = 0.6):
-        super(ObjectDetection, self).__int__()
-        self.sensobs = sensobs
-        self.motor_rec = (0,0)
-        self.active_flag = True
-        self.halt_request = False
-        self.priority = None
-        self.match_degree = 0
-        self.weight = self.match_degree * self.priority
-        self.name = "ObjectDetection"
-
-        self.timestep == 0.8
-
-        self.camera = sensobs[2]
-        self.ultrasonic = sensobs[0]
+    def __int__(self, sensobs, target="red"):
+        super(ObjectDetection, self).__int__(sensobs, active_flag=False, priority=0.6)
+        self.camera = self.sensobs[2]
+        self.ultrasonic = self.sensobs[0]
         self.halt_dist = 3
-        self.debug = False
-        self.target_color = {"red": 0, "green": 1, "blue":2}
-        self.color_margin = 0.8
-        self.diameter = 2
-        self.midMargin = 20
+        self.target_color = {"red": 0, "green": 1, "blue": 2}[target]
+        self.not_target_colors = [[i] for i in range(3) if i != self.target_color]
+        self.color_treshold = 255 / 2
 
-        def sence_and_act(self):
-            img = self.camera.get_value()
-            result = self.analyze(img)
-            if result:
-                x, y = result
-                if x < self.camera.img_width // 2 - self.midMargin:
-                    self.motor_recommendation = (0.0, 0.3)
-                    self.timestep = 2 * (self.camera.img_width // 2 - x) / self.camera.img_width
-                    self.match_degree = 0.7
-                elif x > self.camera.img_width // 2 + self.midMargin:
-                    self.motor_recommendation = (0.3, 0.0)
-                    self.timestep = 2 * (x - self.camera.img_width // 2) / self.camera.img_width
-                    self.match_degree = 0.7
-                else:
-                    if self.ultrasonic.value < self.halt_dist:
-                        self.halt_flag = True
-                    else:
-                        self.motor_recommendation = (0.3, 0.3)
-                        self.match_degree = 0.9
-                        self.timestep = 0.5
-            else:
-                self.motor_recommendation = (0, 0)
-                self.match_degree = 0
+    def check_pixel_for_target(self, pixel):
+        """
+        :param: tuple (3 values)
+        :return: boolean
+        """
+        return (pixel[self.target_color] > self.color_treshold) and (
+                pixel[self.not_target_colors[0]] < self.color_treshold) and (
+                       pixel[self.not_target_colors[0]] < self.color_treshold)
 
-        def analyze(self, img):
-            if img:
-                coords = {}
-                for i in range(img.size[0]):
-                    for j in range(img.size[1]):
-                        p = img.getpixel((i, j))
-                        correct = True
-                        amount = 0
-                        for c in (0, 1, 2):
-                            if c == self.target_color: continue
-                            avg = sum(p) / 3
-                            diff = int(p[self.target_color] * self.color_margin - p[c])
-                            if diff < 0 or avg > 150 or avg < 20:
-                                correct = False
-                                break
-                            amount += diff
-                        if correct:
-                            coords[(i, j)] = int(amount // 2)
-                            if self.debug:
-                                img.putpixel((i, j), (amount, amount, amount))
-                        elif self.debug:
-                            img.putpixel((i, j), (0, 0, 255))
-                for i in range(2):
-                    newCoords = {}
-                    for k, v in coords.items():
-                        delete = False
-                        for i in range(self.diameter):
-                            for j in range(self.diameter):
-                                x = k[0] + i - self.diameter // 2
-                                y = k[1] + j - self.diameter // 2
-                                if not (x, y) in coords:
-                                    delete = True
-                                    break
-                        if not delete:
-                            newCoords[k] = v
-                        elif self.debug:
-                            img.putpixel((k[0], k[1]), (0, 0, 255))
-                    coords = newCoords
-                xl = []
-                yl = []
-                size = 0
-                for k, v in coords.items():
-                    xl.extend([k[0]] * (v // 5))
-                    yl.extend([k[1]] * (v // 5))
-                    size += v // 5
-                if size:
-                    xavg = int(sum(xl) / size)
-                    yavg = int(sum(yl) / size)
-                    if self.debug:
-                        img.putpixel((xavg, yavg), (255, 0, 0))
-                        img.save('debug.png')
-                    return (xavg, yavg)
-                else:
-                    if self.debug:
-                        img.save('debug.png')
-                    return False
+    def whatever(self):
+        # TODO: Implement
+        """
+        Three regions
+        - left: go left
+        - middle: go forward
+        - right: go right
+        New matrix
+        - areas that are correct (red yes, blue no, green no) have 1-value, others have 0-value
+        Find region
+        - count 1s in each region
+        """
+        img = self.camera.get_value()
+        width = img.xmax
+        height = img.ymax
+        target_matrix = [[0 * c for c in range(width)] for r in range(height)]
+        for i in range(width):
+            for j in range(height):
+                pixel = img.get_pixel(i, j)
+                # First list in row j, then element i in list
+                target_matrix[j][i] = self.check_pixel_for_target(pixel) and 1 or 0
+        # Middle is always >= left and right
+        left_right_size = int(width / 3)
+        middle_size = width - 2 * left_right_size
+        left_1s = 0
+        middle_1s = 0
+        right_1s = 0
+        for r in target_matrix:
+            for e in r[:left_right_size]:
+                if e == 1:
+                    left_1s += 1
+            for e in r[left_right_size:left_right_size + middle_size]:
+                if e == 1:
+                    middle_1s += 1
+            for e in r[width - left_right_size:]:
+                if e == 1:
+                    right_1s += 1
+        if left_1s > middle_1s and left_1s > right_1s:
+            self.motor_rec = 'left'
+        elif right_1s > middle_1s and right_1s > left_1s:
+            self.motor_rec = 'right'
+        else:
+            self.motor_rec = 'forward'
+        self.match_degree = 0.8
+        if self.ultrasonic.get_value() < self.halt_dist:
+            self.halt_request = True
