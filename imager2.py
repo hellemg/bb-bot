@@ -10,7 +10,7 @@ class Imager():
     def __init__(self, fid=False, image=False, width=100, height=100, background='black', mode='RGB'):
         self.fid = fid  # The image file
         self.image = image  # A PIL image object
-        self.xmax = width
+        self.xmax = width;
         self.ymax = height  # These can change if there's an input image or file
         self.mode = mode
         self.init_image(background=background)
@@ -98,7 +98,7 @@ class Imager():
         image = image if image else self.image
 
         def wta(p):
-            s = sum(p)
+            s = sum(p);
             w = max(p)
             if s > 0 and w / s >= thresh:
                 return tuple([(x if x == w else 0) for x in p])
@@ -171,7 +171,7 @@ class Imager():
         else:
             child = self.scale(scale, scale)  # child is a scaled copy of self
             child.tunnel(levels - 1, scale)
-            dx = round((1 - scale) * self.xmax / 2)
+            dx = round((1 - scale) * self.xmax / 2);
             dy = round((1 - scale) * self.ymax / 2)
             self.paste(child, dx, dy)
             return self
@@ -185,9 +185,9 @@ class Imager():
 # Note: the default file paths for these examples are for unix!
 
 def ptest1(fid1='images/kdfinger.jpeg', fid2="images/einstein.jpeg", steps=5, newsize=250):
-    im1 = Imager(fid1)
+    im1 = Imager(fid1);
     im2 = Imager(fid2)
-    im1 = im1.resize(newsize, newsize)
+    im1 = im1.resize(newsize, newsize);
     im2 = im2.resize(newsize, newsize)
     roll = im1.morphroll(im2, steps=steps)
     roll.display()
@@ -195,8 +195,8 @@ def ptest1(fid1='images/kdfinger.jpeg', fid2="images/einstein.jpeg", steps=5, ne
 
 
 def ptest2(fid1='images/einstein.jpeg', outfid='images/tunnel.jpeg', levels=3, newsize=250, scale=0.8):
-    im1 = Imager(fid1)
-    im1 = im1.resize(newsize, newsize)
+    im1 = Imager(fid1);
+    im1 = im1.resize(newsize, newsize);
     im2 = im1.tunnel(levels=levels, scale=scale)
     im2.display()
     im2.dump_image(outfid)
@@ -204,9 +204,9 @@ def ptest2(fid1='images/einstein.jpeg', outfid='images/tunnel.jpeg', levels=3, n
 
 
 def ptest3(fid1='images/kdfinger.jpeg', fid2="images/einstein.jpeg", newsize=250, levels=4, scale=0.75):
-    im1 = Imager(fid1)
+    im1 = Imager(fid1);
     im2 = Imager(fid2)
-    im1 = im1.resize(newsize, newsize)
+    im1 = im1.resize(newsize, newsize);
     im2 = im2.resize(newsize, newsize)
     box = im1.mortun(im2, levels=levels, scale=scale)
     box.display()

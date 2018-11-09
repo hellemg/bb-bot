@@ -1,15 +1,14 @@
+#!/usr/bin/env python
 from time import sleep
 import datetime
 import RPi.GPIO as GPIO
-from sensob import *
 
 
-class ReflectanceSensors(Sensob):
+class ReflectanceSensors():
     # The constructor allows students to decide if they want to auto_calibrate
     # the robot, or if they want to hard code the min and max readings of the
     # reflectance sensors
     def __init__(self, auto_calibrate=False, min_reading=100, max_reading=1000):
-        super(ReflectanceSensors, self).__init__()
         self.setup()
         if (auto_calibrate):
             # Calibration loop should last ~5 seconds
@@ -21,6 +20,7 @@ class ReflectanceSensors(Sensob):
             for i in range(len(self.max_val)):
                 self.max_val[i] = max_reading
                 self.min_val[i] = min_reading
+
         print("Calibration results")
         print(self.max_val)
         print(self.min_val)
@@ -39,17 +39,21 @@ class ReflectanceSensors(Sensob):
         self.updated = False
         # For GPIO.BOARD
         self.sensor_inputs = [33, 32, 31, 37, 36, 29]  # Sensors from left to right
+
         # Set the mode to GPIO.BOARD
         GPIO.setmode(GPIO.BOARD)
 
     def calibrate(self):
         print("calibrating...")
         self.recharge_capacitors()
+
         # GPIO.setup(sensor_inputs, GPIO.IN)
         for pin in self.sensor_inputs:
             time = self.get_sensor_reading(pin)
+
             # Get the index from the map
             index = self.sensor_indices[pin]
+
             # This is the first iteration
             if (self.max_val[index] == -1):
                 self.max_val[index] = time.microseconds
@@ -60,6 +64,7 @@ class ReflectanceSensors(Sensob):
                     self.max_val[index] = time.microseconds
                 elif (time.microseconds < self.min_val[index]):
                     self.min_val[index] = time.microseconds
+
             # Print the calculated time in microseconds
             print("Pin: " + str(pin))
             print(time.microseconds)
@@ -93,10 +98,18 @@ class ReflectanceSensors(Sensob):
     # the amount of reflectance picked up by each one.  A high reflectance (near 1) indicates a LIGHT surface, while
     # a value near 0 indicates a DARK surface.
 
-    def sensor_get_value(self):
+    def get_value(self):
+        return self.value
+
+    def update(self):
+        self.compute_value()
+        return self.value
+
+    def compute_value(self):
         self.recharge_capacitors()
         for pin in self.sensor_inputs:
             time = self.get_sensor_reading(pin)
+
             index = self.sensor_indices[pin]
             self.value[index] = 1 - self.normalize(index, time.microseconds)
 

@@ -1,3 +1,5 @@
+__author__ = 'keithd'
+
 from time import sleep
 import random
 import imager2 as IMR
@@ -30,7 +32,7 @@ def dancer():
 
 def explorer(dist=10):
     ZumoButton().wait_for_press()
-    m = Motors()
+    m = Motors();
     u = Ultrasonic()
     while u.update() > dist:
         m.forward(.2, 0.2)
@@ -54,8 +56,8 @@ def random_step(motors, speed=0.25, duration=1):
 
 def tourist(steps=25, shots=5, speed=.25):
     ZumoButton().wait_for_press()
-    rs = ReflectanceSensors()
-    m = Motors()
+    rs = ReflectanceSensors();
+    m = Motors();
     c = Camera()
     for i in range(steps):
         random_step(m, speed=speed, duration=0.5)

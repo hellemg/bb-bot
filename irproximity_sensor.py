@@ -1,10 +1,8 @@
 import RPi.GPIO as GPIO
-from sensob import *
 
 
-class IRProximitySensor(Sensob):
+class IRProximitySensor:
     def __init__(self):
-        super(IRProximitySensor, self).__init__()
         self.value = None
         self.read_pin_1 = 8
         self.read_pin_2 = 10
@@ -12,6 +10,16 @@ class IRProximitySensor(Sensob):
 
     def setup(self):
         GPIO.setmode(GPIO.BOARD)
+
+    def get_value(self):
+        return self.value
+
+    def update(self):
+        self.value = self.sensor_get_value()
+        return self.value
+
+    def reset(self):
+        self.value = None
 
     def sensor_get_value(self):
         GPIO.setup(self.read_pin_1, GPIO.IN)
