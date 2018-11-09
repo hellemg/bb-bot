@@ -1,6 +1,7 @@
 import time
 from obstacleavoidance import *
 from linefollowing import *
+from objectdetection import *
 from arbitrator import *
 from motobs import *
 from sensob import *
@@ -8,10 +9,10 @@ from sensob import *
 
 class BBCon:
     def __init__(self, debug=True):
-        self.sensobs = [FakeUltrasonic(), FakeReflectance()]
+        self.sensobs = [FakeUltrasonic(), FakeReflectance(), FakeCamera()]
         self.active_behaviours = []
         self.motobs = [Motobs()]
-        self.behaviours = [ObstacleAvoidance(self.sensobs), LineFollowing(self.sensobs)]
+        self.behaviours = [ObstacleAvoidance(self.sensobs), LineFollowing(self.sensobs), ObjectDetection(self, self.sensobs)]
         self.arbitrator = Arbitrator()
         self.timestep = 1
         self.debug = debug
@@ -37,11 +38,17 @@ class BBCon:
 
     def decide_active_behaviours(self):
         for ab in self.active_behaviours:
+            #if self.debug:
+                #print("- Considering active behaviour:", ab.name)
             if not ab.active_flag:
                 self.deactivate_behaviour(ab)
+                if self.debug:
+                    print("-",ab.name,"has been deactivated")
         for b in self.behaviours:
             if b.active_flag and b not in self.active_behaviours:
                 self.activate_behaviour(b)
+                if self.debug:
+                    print("-", b.name,"has been activated")
         self.arbitrator.reset_active_behaviours()
         for ab in self.active_behaviours:
             self.arbitrator.add_active_behaviour(ab)

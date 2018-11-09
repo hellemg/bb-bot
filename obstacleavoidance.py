@@ -9,7 +9,7 @@ class ObstacleAvoidance(Behaviour):
         self.threshold = threshold
 
     def get_front(self):
-        self.front = self.ultrasonic.get_value() < self.threshold
+        self.front = self.ultrasonic.get_value() < self.threshold and self.ultrasonic.get_value() > 0
 
     def sense_and_act(self):
         self.get_front()

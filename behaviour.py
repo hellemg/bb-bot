@@ -1,5 +1,5 @@
 class Behaviour:
-    def __init__(self, sensobs, active_flag, priority, debug=True):
+    def __init__(self, sensobs, active_flag, priority, debug=False):
         # self.bbcon = bbcon
         self.name = self.__class__.__name__
         self.sensobs = sensobs
@@ -18,10 +18,14 @@ class Behaviour:
         pass
 
     def set_active_flag(self):
+        #print("---Active flag of", self.name)
+        #print("---flag is:", self.active_flag)
         if self.active_flag:
+            #print("--- flag is true")
             self.active_flag = not self.consider_deactivation()
         else:
             self.active_flag = self.consider_activation()
+        #print("---flag set to:", self.active_flag)
 
     def update(self):
         if self.debug:
@@ -30,7 +34,8 @@ class Behaviour:
         self.set_active_flag()
         self.weight = self.match_degree * self.priority
         if self.debug:
-            print("- recommended to drive", self.motor_rec)
+            print("- recommended to drive:", self.motor_rec)
+            print("- weight:", self.weight)
             print("- active flag: ", self.active_flag)
 
     def sense_and_act(self):

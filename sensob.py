@@ -1,5 +1,10 @@
+from PIL import Image
+import os
+from imager2 import *
+
+
 class Sensob:
-    def __init__(self, debug=True):
+    def __init__(self, debug=False):
         self.name = self.__class__.__name__
         self.value = None
         self.debug = debug
@@ -45,3 +50,16 @@ class FakeReflectance(Sensob):
         choice = input(print("Choose where the dark is - right/left/middle/black/white (r/l/m/b/w): "))
         return {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
                 'w': [1, 1, 1, 1, 1, 1]}[choice]
+
+
+class FakeCamera(Sensob):
+    def __init__(self, img_width=100, img_height=100, img_rot=0):
+        super(FakeCamera, self).__init__()
+        self.value = None
+        self.img_width = img_width
+        self.img_height = img_height
+        self.img_rot = img_rot
+        self.filepath = os.getcwd()
+
+    def sensor_get_value(self):
+        return Image.open('red.png').convert('RGB')

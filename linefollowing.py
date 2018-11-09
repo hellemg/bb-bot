@@ -105,4 +105,3 @@ class LineFollowing(Behaviour):
                     print("- everything is black")
                 self.motor_rec = 'stop'
                 self.match_degree = 1
-                self.priority = 1
