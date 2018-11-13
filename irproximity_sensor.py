@@ -13,6 +13,7 @@ class FakeUltrasonic(Sensob):
         GPIO.setmode(GPIO.BOARD)
 
     def get_value(self):
+        print("IR (ultrasonic) value:", self.value)
         return self.value
 
     def update(self):
