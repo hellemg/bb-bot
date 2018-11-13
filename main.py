@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     dancer()
     #explorer()
-    tourist()
+    #tourist()
 
 
     BBCon = BBCon()
