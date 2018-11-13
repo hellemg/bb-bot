@@ -2,7 +2,6 @@ class Motobs():
     def __init__(self, debug=True):
         self.value = (0, 0)
         self.debug = debug
-        self.name = "Motobs"
 
     def forward(self, speed=0.25, dur=None):
         if self.debug:
@@ -12,22 +11,27 @@ class Motobs():
     def backward(self, speed=0.25, dur=None):
         if self.debug:
             print("Going backwards for %.2f seconds" % dur)
+        pass
 
     def left(self, speed=0.25, dur=None):
         if self.debug:
             print("Going left for %.2f seconds" % dur)
+        pass
 
     def right(self, speed=0.25, dur=None):
         if self.debug:
             print("Going right for %.2f seconds" % dur)
+        pass
 
     def stop(self):
         if self.debug:
             print("Stopping")
+        pass
 
     def dance(self):
         if self.debug:
             print("Victory dance!")
+        pass
 
     def send_request_to_motors(self, motor_rec, dur):
         if motor_rec == "forward":

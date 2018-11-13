@@ -74,6 +74,8 @@ class BBCon:
                 print("-", ab.name)
         motor_rec, halt_flag = self.arbitrator.choose_action()
         if halt_flag:
+            self.motobs[0].send_request_to_motors('dance', self.timestep)
+            self.motobs[0].send_request_to_motors('stop', self.timestep)
             quit()
         self.motobs[0].send_request_to_motors(motor_rec, self.timestep)
         self.wait(self.timestep)

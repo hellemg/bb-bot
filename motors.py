@@ -108,3 +108,12 @@ class Motors(Motobs):
         if duration:
             sleep(duration)
             self.stop()
+
+    def dance(self):
+        self.forward(.2, 3)
+        self.backward(.2, 3)
+        self.right(.5, 3)
+        self.left(.5, 3)
+        self.backward(.3, 2.5)
+        self.set_value([.5, .1], 10)
+        self.set_value([-.5, -.1], 10)
