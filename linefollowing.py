@@ -7,7 +7,7 @@ class LineFollowing(Behaviour):
         self.have_been_active = True
         self.reflectance = self.sensobs[1]
         # Sensorvalue range: [0,1]. 0 means dark
-        self.min_sensor_value = 0.4#min(self.reflectance.min_val)
+        self.min_sensor_value = 0#min(self.reflectance.min_val)
         self.max_sensor_value = 1#max(self.reflectance.max_val)
         self.middle_sensor_value = (self.min_sensor_value + self.max_sensor_value) / 2
         print("LF middle sensor value:", self.middle_sensor_value)
