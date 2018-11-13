@@ -6,7 +6,7 @@ from sensob import *
 
 class FakeCamera(Sensob):
     def __init__(self, img_width=128, img_height=96, img_rot=0):
-        super(Camera, self).__init__()
+        super(FakeCamera, self).__init__()
         self.value = None
         self.img_width = img_width
         self.img_height = img_height

@@ -3,6 +3,7 @@ from sensob import *
 
 class FakeUltrasonic(Sensob):
     def __init__(self):
+        super(FakeUltrasonic, self).__init__()
         self.value = None
         self.read_pin_1 = 8
         self.read_pin_2 = 10

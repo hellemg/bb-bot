@@ -6,6 +6,7 @@ from motobs import *
 
 class Motors(Motobs):
     def __init__(self):
+        super(Motors, self).__init__()
         self.setup()
 
     def setup(self):
