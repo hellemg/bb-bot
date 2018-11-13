@@ -1,10 +1,11 @@
 import RPi.GPIO as GPIO
 import time
-#from sensob import *
+from sensob import *
 
-class Ultrasonic(Sensob):
+class FakeUltrasonic(Sensob):
 
     def __init__(self):
+        super(FakeUltrasonic, self).__init__()
         self.value = None
         self.trig_pin = 26
         self.echo_pin = 11
