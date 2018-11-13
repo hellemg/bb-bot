@@ -25,7 +25,7 @@ class ObstacleAvoidance(Behaviour):
             self.motor_rec = "stop"
 
     def consider_activation(self):
-        self.active_flag = True
+        return True
 
     def consider_deactivation(self):
-        self.active_flag = True
+        return False

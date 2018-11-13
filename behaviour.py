@@ -1,5 +1,5 @@
 class Behaviour:
-    def __init__(self, sensobs, active_flag, priority, debug=False):
+    def __init__(self, sensobs, active_flag, priority, debug=True):
         # self.bbcon = bbcon
         self.name = self.__class__.__name__
         self.sensobs = sensobs
@@ -18,14 +18,14 @@ class Behaviour:
         pass
 
     def set_active_flag(self):
-        #print("---Active flag of", self.name)
-        #print("---flag is:", self.active_flag)
+        print("---Active flag of", self.name)
+        print("---flag is:", self.active_flag)
         if self.active_flag:
-            #print("--- flag is true")
+            print("--- flag is true")
             self.active_flag = not self.consider_deactivation()
         else:
             self.active_flag = self.consider_activation()
-        #print("---flag set to:", self.active_flag)
+        print("---flag set to:", self.active_flag)
 
     def update(self):
         if self.debug:

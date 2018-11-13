@@ -28,6 +28,7 @@ class LineFollowing(Behaviour):
         Deactivate if:
         - Everything is dark (reached a blob)
         """
+        print("LF consider deact:", self.motor_rec)
         return self.motor_rec == 'stop'
 
     def get_bottom(self):

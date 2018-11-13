@@ -4,7 +4,7 @@ from imager2 import *
 
 
 class Sensob:
-    def __init__(self, debug=False):
+    def __init__(self, debug=True):
         self.name = self.__class__.__name__
         self.value = None
         self.debug = debug
