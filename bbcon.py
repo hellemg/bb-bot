@@ -42,6 +42,8 @@ class BBCon:
         time.sleep(seconds)
 
     def decide_active_behaviours(self):
+        if self.debug:
+            print("¨¨¨¨Deciding active behaviors")
         for ab in self.active_behaviours:
             #if self.debug:
                 #print("- Considering active behaviour:", ab.name)

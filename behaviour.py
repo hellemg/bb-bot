@@ -29,7 +29,7 @@ class Behaviour:
 
     def update(self):
         if self.debug:
-            print("Updating behaviour: ", self.name)
+            print("¨¨¨¨Updating behaviour: ", self.name)
         self.sense_and_act()
         self.set_active_flag()
         self.weight = self.match_degree * self.priority
