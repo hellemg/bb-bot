@@ -1,6 +1,6 @@
-#from PIL import Image
+from PIL import Image
 import os
-#from imager2 import *
+from imager2 import *
 
 
 class Sensob:

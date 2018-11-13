@@ -1,10 +1,16 @@
 import time
+from behaviour import *
 from obstacleavoidance import *
 from linefollowing import *
 from objectdetection import *
 from arbitrator import *
 from motobs import *
+from motors import *
 from sensob import *
+from reflectance_sensors import *
+from irproximity_sensor import *
+from camera import *
+
 
 
 class BBCon:
