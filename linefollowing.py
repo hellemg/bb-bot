@@ -20,8 +20,8 @@ class LineFollowing(Behaviour):
         """
         returnstuff = not self.have_been_active
         # self.have_been_active = True
-        if self.debug:
-            print("LF consider activation. returnstuff and have been active:", returnstuff, self.have_been_active)
+        #if self.debug:
+        #    print("LF consider activation. returnstuff and have been active:", returnstuff, self.have_been_active)
         return returnstuff
 
     def consider_deactivation(self):

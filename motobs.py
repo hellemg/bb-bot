@@ -34,6 +34,8 @@ class Motobs():
         pass
 
     def send_request_to_motors(self, motor_rec, dur):
+        if self.debug:
+            print("Requesting to drive", motor_rec)
         if motor_rec == "forward":
             self.forward(dur=dur)
         elif motor_rec == "backward":
