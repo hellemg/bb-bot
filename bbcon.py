@@ -16,7 +16,7 @@ class BBCon:
     def __init__(self, debug=True):
         self.sensobs = [FakeUltrasonic(), FakeReflectance(), FakeCamera()]
         self.active_behaviours = []
-        self.motobs = [Motobs()]
+        self.motobs = [Motors()]
         self.behaviours = [ObstacleAvoidance(self.sensobs), LineFollowing(self.sensobs), ObjectDetection(self, self.sensobs)]
         self.arbitrator = Arbitrator()
         self.timestep = 1

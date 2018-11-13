@@ -72,7 +72,8 @@ class LineFollowing(Behaviour):
                 self.sensor_values[i] = 0
             else:
                 self.sensor_values[i] = 1
-            print("Element nr ", i, e, "is now", self.sensor_values[i])
+            if self.debug:
+                print("Element nr ", i, e, "is now", self.sensor_values[i])
         # Find change if it exists
         change_index = self.index_of_change()
         if self.is_white(0):
