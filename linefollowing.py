@@ -10,6 +10,7 @@ class LineFollowing(Behaviour):
         self.min_sensor_value = 0.4#min(self.reflectance.min_val)
         self.max_sensor_value = 1#max(self.reflectance.max_val)
         self.middle_sensor_value = (self.min_sensor_value + self.max_sensor_value) / 2
+        print("LF middle sensor value:", self.middle_sensor_value)
         self.sensor_values = [-1, -1, -1, -1, -1, -1]
 
     def consider_activation(self):
@@ -71,6 +72,7 @@ class LineFollowing(Behaviour):
                 self.sensor_values[i] = 0
             else:
                 self.sensor_values[i] = 1
+            print("Element nr ", i, e, "is now", self.sensor_values[i])
         # Find change if it exists
         change_index = self.index_of_change()
         if self.is_white(0):
