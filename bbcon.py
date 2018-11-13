@@ -78,6 +78,6 @@ class BBCon:
             self.motobs[0].send_request_to_motors('stop', self.timestep)
             quit()
         self.motobs[0].send_request_to_motors(motor_rec, self.timestep)
-        self.wait(self.timestep)
+        #self.wait(self.timestep)
         for s in self.sensobs:
             s.reset()
