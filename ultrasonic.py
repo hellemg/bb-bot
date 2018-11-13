@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
 import time
+from sensob import *
 
-
-class Ultrasonic():
+class Ultrasonic(Sensob):
 
     def __init__(self):
         self.value = None

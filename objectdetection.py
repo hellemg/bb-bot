@@ -82,7 +82,7 @@ class ObjectDetection(Behaviour):
         else:
             self.motor_rec = 'forward'
         self.match_degree = 0.8
-        if self.active_flag and (0 < self.ultrasonic.get_value() < self.halt_dist):
+        if 0 < self.ultrasonic.get_value() < self.halt_dist:
             self.halt_request = True
         else:
             self.halt_request = False

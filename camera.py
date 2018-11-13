@@ -4,7 +4,7 @@ from PIL import Image
 from sensob import *
 
 
-class Camera(Sensob):
+class FakeCamera(Sensob):
     def __init__(self, img_width=128, img_height=96, img_rot=0):
         super(Camera, self).__init__()
         self.value = None

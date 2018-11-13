@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
+from sensob import *
 
-
-class IRProximitySensor:
+class FakeUltrasonic(Sensob):
     def __init__(self):
         self.value = None
         self.read_pin_1 = 8

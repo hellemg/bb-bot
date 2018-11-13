@@ -2,9 +2,9 @@
 from time import sleep
 import datetime
 import RPi.GPIO as GPIO
+from sensob import *
 
-
-class ReflectanceSensors():
+class FakeReflectance(Sensob):
     # The constructor allows students to decide if they want to auto_calibrate
     # the robot, or if they want to hard code the min and max readings of the
     # reflectance sensors

@@ -1,6 +1,6 @@
-from PIL import Image
+#from PIL import Image
 import os
-from imager2 import *
+#from imager2 import *
 
 
 class Sensob:
@@ -33,6 +33,7 @@ class Sensob:
         return self.name
 
 
+"""
 class FakeUltrasonic(Sensob):
     def sensor_get_value(self):
         return int(input("type front-sensor value: "))
@@ -63,3 +64,4 @@ class FakeCamera(Sensob):
 
     def sensor_get_value(self):
         return Image.open('red.png').convert('RGB')
+"""
