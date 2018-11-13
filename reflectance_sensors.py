@@ -99,14 +99,7 @@ class FakeReflectance(Sensob):
     # the amount of reflectance picked up by each one.  A high reflectance (near 1) indicates a LIGHT surface, while
     # a value near 0 indicates a DARK surface.
 
-    def get_value(self):
-        return self.value
-
-    def update(self):
-        self.compute_value()
-        return self.value
-
-    def compute_value(self):
+    def sensor_get_value(self):
         self.recharge_capacitors()
         for pin in self.sensor_inputs:
             time = self.get_sensor_reading(pin)

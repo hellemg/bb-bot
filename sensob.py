@@ -17,7 +17,7 @@ class Sensob:
         return self.value
 
     def update(self):
-        self.value = self.sensor_get_value()
+        self.sensor_get_value()
         if self.debug:
             print("Updating sensob: ", self.name)
             print("- sensor value:", self.value)

@@ -14,15 +14,6 @@ class FakeUltrasonic(Sensob):
     def setup(self):
         GPIO.setmode(GPIO.BOARD)
 
-    def get_value(self):
-        return self.value
-
-    def update(self):
-        self.value = self.sensor_get_value()
-
-    def reset(self):
-        self.value = None
-
     def sensor_get_value(self):
         GPIO.setup(self.trig_pin, GPIO.OUT)
         GPIO.setup(self.echo_pin, GPIO.IN)
@@ -56,7 +47,7 @@ class FakeUltrasonic(Sensob):
         distance = self.compute_distance(signalon, signaloff)
 
         # Returnerer distanset til objektet forran sensoren i cm
-        return distance
+        self.value = distance
 
     def send_activation_pulse(self):
         GPIO.output(self.trig_pin, GPIO.LOW)
