@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from sensob import *
+#from sensob import *
 
 class FakeWhatever(Sensob):
     def __init__(self):
