@@ -15,12 +15,12 @@ class ObstacleAvoidance(Behaviour):
         self.get_front()
         if self.front:
             if self.debug:
-                print("- object in front")
+                print("- object in front of robot")
             self.match_degree = 1
             self.motor_rec = "right"
         else:
             if self.debug:
-                print("- no object in front")
+                print("- no object in front of robot")
             self.match_degree = 0
             self.motor_rec = "stop"
 
