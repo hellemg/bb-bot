@@ -11,8 +11,9 @@ if __name__ == '__main__':
     #explorer()
     #tourist()
 
-
+    """
     BBCon = BBCon()
     ZumoButton().wait_for_press()
     while 1:
         BBCon.run_one_timestep()
+    """
