@@ -17,7 +17,7 @@ class Sensob:
         return self.value
 
     def update(self):
-        self.sensor_get_value()
+        self.value = self.sensor_get_value()
         if self.debug:
             print("¨¨¨¨Updating sensob: ", self.name)
             print("- sensor value:", self.value)
@@ -33,7 +33,7 @@ class Sensob:
         return self.name
 
 
-"""
+
 class FakeUltrasonic(Sensob):
     def sensor_get_value(self):
         return int(input("type front-sensor value: "))
@@ -64,4 +64,3 @@ class FakeCamera(Sensob):
 
     def sensor_get_value(self):
         return Image.open('red.png').convert('RGB')
-"""

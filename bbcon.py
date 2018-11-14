@@ -5,18 +5,18 @@ from linefollowing import *
 from objectdetection import *
 from arbitrator import *
 from motobs import *
-from motors import *
+#from motors import *
 from sensob import *
-from reflectance_sensors import *
-from camera import *
-from ultrasonic import *
+#from reflectance_sensors import *
+#from camera import *
+#from ultrasonic import *
 
 
 class BBCon:
     def __init__(self, debug=True):
         self.sensobs = [FakeUltrasonic(), FakeReflectance(), FakeCamera()]
         self.active_behaviours = []
-        self.motobs = [Motors()]
+        self.motobs = [Motobs()]
         self.behaviours = [ObstacleAvoidance(self.sensobs), LineFollowing(self.sensobs), ObjectDetection(self, self.sensobs)]
         self.arbitrator = Arbitrator()
         self.timestep = 1

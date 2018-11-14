@@ -2,7 +2,7 @@
 from time import sleep
 import RPi.GPIO as GPIO
 import wiringpi as wp
-from motobs import *
+#from motobs import *
 
 class Motors(Motobs):
     def __init__(self):

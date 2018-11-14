@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 
-from sensob import *
+#from sensob import *
 
 
 class FakeCamera(Sensob):
