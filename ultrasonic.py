@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 import time
-#from sensob import *
+
+
+# from sensob import *
 
 class FakeUltrasonic(Sensob):
 

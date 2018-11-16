@@ -1,6 +1,5 @@
 from PIL import Image
 import os
-from imager2 import *
 
 
 class Sensob:
@@ -32,7 +31,6 @@ class Sensob:
         return self.name
 
 
-
 class FakeUltrasonic(Sensob):
     def sensor_get_value(self):
         self.value = int(input("type front-sensor value: "))
@@ -48,8 +46,9 @@ class FakeReflectance(Sensob):
         # Where the black part is
         # Low value means dark
         choice = input(print("Choose where the dark is - right/left/middle/black/white (r/l/m/b/w): "))
-        self.value = {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
-                'w': [1, 1, 1, 1, 1, 1]}[choice]
+        self.value = \
+        {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
+         'w': [1, 1, 1, 1, 1, 1]}[choice]
 
 
 class FakeCamera(Sensob):

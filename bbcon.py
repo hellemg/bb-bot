@@ -1,5 +1,4 @@
 import time
-from behaviour import *
 from obstacleavoidance import *
 from linefollowing import *
 from objectdetection import *

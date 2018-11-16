@@ -1,15 +1,10 @@
 from bbcon import *
 #from zumo_button import *
-#from robodemo import *
 
 
 
 if __name__ == '__main__':
     print("Running BBCon")
-
-    #dancer()
-
-
 
     BBCon = BBCon()
     #ZumoButton().wait_for_press()

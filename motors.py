@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from time import sleep
 import RPi.GPIO as GPIO
 import wiringpi as wp
