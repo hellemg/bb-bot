@@ -4,7 +4,7 @@ from behaviour import *
 class ObjectDetection(Behaviour):
     def __init__(self, bbcon, sensobs, target="red", halt_dist=4.5):
         """
-
+        Search for object with target-color
         :param bbcon: class BBCon that uses this ObjectDetection-class
         :param sensobs: list, sensobs that the BBCon utilises
         :param target: string, color of object ObjectDetection looks for
@@ -20,9 +20,11 @@ class ObjectDetection(Behaviour):
         self.color_treshold = 255 / 3
 
     def consider_deactivation(self):
+        #Deactivate if the goal is reached
         return self.halt_request
 
     def consider_activation(self):
+        #Activate if LineFollowing is un-active
         return not self.bbcon.behaviours[1].active_flag
 
     def check_pixel_for_target(self, pixel):
@@ -49,6 +51,7 @@ class ObjectDetection(Behaviour):
         left_right_size = int(width / 3)
         middle_size = width - 2 * left_right_size
         target_pixels = {'left': 0, 'forward': 0, 'right': 0}
+        #Iterate through the image to count target-color-pixels in each region
         for j in range(height):
             for i in range(left_right_size):
                 pixel = img.getpixel((i, j))
@@ -65,9 +68,10 @@ class ObjectDetection(Behaviour):
             print("- left target-color-pixels:", target_pixels['left'])
             print("- forward target-color-pixels:", target_pixels['forward'])
             print("- right target-color-pixels:", target_pixels['right'])
+        #Not enough target-color to approach it, look around instead
         if sum(target_pixels.values()) < 10:
-            # Look around
             self.motor_rec = 'left'
+        #Go in the direction with most target-color
         else:
             self.motor_rec = max(target_pixels, key = target_pixels.get)
         self.match_degree = 0.8
