@@ -41,44 +41,35 @@ class ObjectDetection(Behaviour):
         - left: go left
         - middle: go forward
         - right: go right
-        New matrix
-        - areas that are correct (red yes, blue no, green no) have 1-value, others have 0-value
-        Find region
-        - count 1s in each region
+        Find region with most target-color-pixels
         """
         img = self.camera.get_value()
         width, height = img.size
         # Middle is always >= left and right
         left_right_size = int(width / 3)
         middle_size = width - 2 * left_right_size
-        left_1s = 0
-        middle_1s = 0
-        right_1s = 0
+        target_pixels = {'left': 0, 'forward': 0, 'right': 0}
         for j in range(height):
             for i in range(left_right_size):
                 pixel = img.getpixel((i, j))
                 if self.check_pixel_for_target(pixel):
-                    left_1s += 1
+                    target_pixels['left'] += 1
                 pixel = img.getpixel((left_right_size + middle_size + i, j))
                 if self.check_pixel_for_target(pixel):
-                    right_1s += 1
+                    target_pixels['right'] += 1
             for i in range(middle_size):
                 pixel = img.getpixel((left_right_size + i, j))
                 if self.check_pixel_for_target(pixel):
-                    middle_1s += 1
+                    target_pixels['forward'] += 1
         if self.debug:
-            print("- left 1s:", left_1s)
-            print("- middle 1s:", middle_1s)
-            print("- right 1s:", right_1s)
-        if (left_1s + middle_1s + right_1s) < 10:
-            # Looking around
-            self.motor_rec = 'right'
-        elif left_1s > middle_1s and left_1s > right_1s:
+            print("- left target-color-pixels:", target_pixels['left'])
+            print("- forward target-color-pixels:", target_pixels['forward'])
+            print("- right target-color-pixels:", target_pixels['right'])
+        if sum(target_pixels.values()) < 10:
+            # Look around
             self.motor_rec = 'left'
-        elif right_1s > middle_1s and right_1s > left_1s:
-            self.motor_rec = 'right'
         else:
-            self.motor_rec = 'forward'
+            self.motor_rec = max(target_pixels, key = target_pixels.get)
         self.match_degree = 0.8
         if 0 < self.ultrasonic.get_value() < self.halt_dist:
             self.halt_request = True
