@@ -4,10 +4,10 @@ import time
 
 # from sensob import *
 
-class FakeUltrasonic(Sensob):
+class Ultrasonic(Sensob):
 
     def __init__(self):
-        super(FakeUltrasonic, self).__init__()
+        super(Ultrasonic, self).__init__()
         self.value = None
         self.trig_pin = 26
         self.echo_pin = 11

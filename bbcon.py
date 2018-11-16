@@ -13,7 +13,7 @@ from sensob import *
 
 class BBCon:
     def __init__(self, debug=True):
-        self.sensobs = [FakeUltrasonic(), FakeReflectance(), FakeCamera()]
+        self.sensobs = [Ultrasonic(), Reflectance(), Camera()]
         self.active_behaviours = []
         self.motobs = [Motobs()]
         self.behaviours = [ObstacleAvoidance(self.sensobs), LineFollowing(self.sensobs), ObjectDetection(self, self.sensobs)]

@@ -31,14 +31,14 @@ class Sensob:
         return self.name
 
 
-class FakeUltrasonic(Sensob):
+class Ultrasonic(Sensob):
     def sensor_get_value(self):
         self.value = int(input("type front-sensor value: "))
 
 
-class FakeReflectance(Sensob):
+class Reflectance(Sensob):
     def __init__(self):
-        super(FakeReflectance, self).__init__()
+        super(Reflectance, self).__init__()
         self.min_val = 0.2
         self.max_val = 0.8
 
@@ -47,13 +47,13 @@ class FakeReflectance(Sensob):
         # Low value means dark
         choice = input(print("Choose where the dark is - right/left/middle/black/white (r/l/m/b/w): "))
         self.value = \
-        {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
-         'w': [1, 1, 1, 1, 1, 1]}[choice]
+            {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
+             'w': [1, 1, 1, 1, 1, 1]}[choice]
 
 
-class FakeCamera(Sensob):
+class Camera(Sensob):
     def __init__(self, img_width=100, img_height=100, img_rot=0):
-        super(FakeCamera, self).__init__()
+        super(Camera, self).__init__()
         self.value = None
         self.img_width = img_width
         self.img_height = img_height
