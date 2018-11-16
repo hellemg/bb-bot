@@ -17,11 +17,10 @@ class Sensob:
         return self.value
 
     def update(self):
-        self.value = self.sensor_get_value()
+        self.sensor_get_value()
         if self.debug:
             print("¨¨¨¨Updating sensob: ", self.name)
             print("- sensor value:", self.value)
-        # return self.value
 
     def reset(self):
         self.value = None
@@ -36,7 +35,7 @@ class Sensob:
 
 class FakeUltrasonic(Sensob):
     def sensor_get_value(self):
-        return int(input("type front-sensor value: "))
+        self.value = int(input("type front-sensor value: "))
 
 
 class FakeReflectance(Sensob):
@@ -49,7 +48,7 @@ class FakeReflectance(Sensob):
         # Where the black part is
         # Low value means dark
         choice = input(print("Choose where the dark is - right/left/middle/black/white (r/l/m/b/w): "))
-        return {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
+        self.value = {'r': [1, 1, 1, 1, 0, 0], 'l': [0, 0, 1, 1, 1, 1], 'm': [1, 0, 0, 0, 0, 1], 'b': [0, 0, 0, 0, 0, 0],
                 'w': [1, 1, 1, 1, 1, 1]}[choice]
 
 
@@ -63,4 +62,4 @@ class FakeCamera(Sensob):
         self.filepath = os.getcwd()
 
     def sensor_get_value(self):
-        return Image.open('red.png').convert('RGB')
+        self.value = Image.open('red.png').convert('RGB')
