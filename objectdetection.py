@@ -2,7 +2,14 @@ from behaviour import *
 
 
 class ObjectDetection(Behaviour):
-    def __init__(self, bbcon, sensobs, target="red", halt_dist = 4.5):
+    def __init__(self, bbcon, sensobs, target="red", halt_dist=4.5):
+        """
+
+        :param bbcon: class BBCon that uses this ObjectDetection-class
+        :param sensobs: list, sensobs that the BBCon utilises
+        :param target: string, color of object ObjectDetection looks for
+        :param halt_dist: float, distance from object that the robot stops
+        """
         super(ObjectDetection, self).__init__(sensobs, active_flag=False, priority=0.6)
         self.bbcon = bbcon
         self.camera = self.sensobs[2]
@@ -13,20 +20,15 @@ class ObjectDetection(Behaviour):
         self.color_treshold = 255 / 3
 
     def consider_deactivation(self):
-        #print("xxx OD consider deact")
-        #print("returnstuff", self.halt_request)
         return self.halt_request
 
     def consider_activation(self):
-        #If LineFollowing turns of, ObjectDetection should activate
-        #print("***OD consider act")
-        #print("LF active flag:", self.bbcon.behaviours[1].active_flag)
-        #print("my flag: ", not self.bbcon.behaviours[1].active_flag)
         return not self.bbcon.behaviours[1].active_flag
 
     def check_pixel_for_target(self, pixel):
         """
-        :param: tuple (3 values)
+        Checks if a pixel contains the target-color
+        :param pixel: tuple (3 values)
         :return: boolean
         """
         return (pixel[self.target_color] > self.color_treshold) and (
@@ -46,34 +48,30 @@ class ObjectDetection(Behaviour):
         """
         img = self.camera.get_value()
         width, height = img.size
-        target_matrix = [[0 * c for c in range(width)] for r in range(height)]
-        for i in range(width):
-            for j in range(height):
-                pixel = img.getpixel((i, j))
-                # First list in row j, then element i in list
-                target_matrix[j][i] = self.check_pixel_for_target(pixel) and 1 or 0
         # Middle is always >= left and right
         left_right_size = int(width / 3)
         middle_size = width - 2 * left_right_size
         left_1s = 0
         middle_1s = 0
         right_1s = 0
-        for r in target_matrix:
-            for e in r[:left_right_size]:
-                if e == 1:
+        for j in range(height):
+            for i in range(left_right_size):
+                pixel = img.getpixel((i, j))
+                if self.check_pixel_for_target(pixel):
                     left_1s += 1
-            for e in r[left_right_size:left_right_size + middle_size]:
-                if e == 1:
-                    middle_1s += 1
-            for e in r[width - left_right_size:]:
-                if e == 1:
+                pixel = img.getpixel((left_right_size + middle_size + i, j))
+                if self.check_pixel_for_target(pixel):
                     right_1s += 1
+            for i in range(middle_size):
+                pixel = img.getpixel((left_right_size + i, j))
+                if self.check_pixel_for_target(pixel):
+                    middle_1s += 1
         if self.debug:
             print("- left 1s:", left_1s)
             print("- middle 1s:", middle_1s)
             print("- right 1s:", right_1s)
-        if (left_1s+middle_1s+right_1s) < 10:
-            #Looking around
+        if (left_1s + middle_1s + right_1s) < 10:
+            # Looking around
             self.motor_rec = 'right'
         elif left_1s > middle_1s and left_1s > right_1s:
             self.motor_rec = 'left'
