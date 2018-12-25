@@ -61,4 +61,4 @@ class Camera(Sensob):
         self.filepath = os.getcwd()
 
     def sensor_get_value(self):
-        self.value = Image.open('red.png').convert('RGB')
+        self.value = Image.open('C:/Users/helle/Pictures/bb_bot_path.png').convert('RGB')
